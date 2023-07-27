@@ -1,8 +1,50 @@
-# React + Vite
+# Postig
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Postig adalah aplikasi web yang digunakan untuk memposting foto dan mengabadikan momen-momen indahmu. Aplikasi ini sangat mudah untuk digunakan, memiliki tampilan yang sederhana, dan _user friendly_.
 
-Currently, two official plugins are available:
+## Fitur
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Posting foto dengan caption dan #tags
+- Like pada postingan
+- Mencari postingan berdasarkan #tags atau caption
+- Pagination pada halaman feed
+- Edit profil
+- Update password
+
+## Instalasi
+
+1. Clone repository ini
+2. Install dependencies dengan menjalankan perintah `npm install`
+3. Buat file `.env` dan isi dengan konfigurasi yang dibutuhkan
+4. Jalankan perintah `npm run dev` untuk menjalankan aplikasi
+
+## Konfigurasi
+
+Konfigurasi `.env` yang dibutuhkan adalah sebagai berikut:
+
+```
+VITE_APP_BASE_URL=http://localhost:3000
+```
+
+Jalankan API terlebih dahulu sebelum menjalankan aplikasi ini:
+[Link API](https://github.com/rozakulbarkhi/api-postig)
+
+## Penggunaan
+
+Sample login user:
+
+```json
+{
+  "username": "user",
+  "password": "password"
+}
+```
+
+| Route        | Description                       |
+| ------------ | --------------------------------- |
+| `/login`     | Menampilkan halaman login         |
+| `/register`  | Menampilkan halaman register      |
+| `/dashboard` | Menampilkan halaman feed          |
+| `/user`      | Menampilkan halaman profile       |
+| `/setting`   | Menampilkan halaman edit password |
+| `/post`      | Menampilkan halaman post user     |
