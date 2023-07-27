@@ -1,42 +1,7 @@
-import FloatingButton from "./FloatingButton";
 import LikeButton from "./LikeButton";
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ModalDeletePost } from "./Modal";
-import HandlePost from "./HandlePost";
 import { twMerge } from "tailwind-merge";
 
-const Feed = ({
-  data,
-  refetch,
-  token,
-  user,
-  isFetching,
-  pageInfo,
-  handleChangePage,
-}) => {
-  // const [modalEdit, setModalEdit] = useState(false);
-  // const [modalDelete, setModalDelete] = useState(false);
-  // const [selectedPost, setSelectedPost] = useState(null);
-
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   if (user) {
-  //     refetch();
-  //   }
-  // }, [refetch, user]);
-
-  // const handleModalEdit = (id) => {
-  //   setModalEdit((prev) => !prev);
-  //   setSelectedPost(id);
-  // };
-
-  // const handleModalDelete = (id) => {
-  //   setModalDelete((prev) => !prev);
-  //   setSelectedPost(id);
-  // };
-
+const Feed = ({ data, refetch, token, pageInfo, handleChangePage }) => {
   const pages = Array.from(
     { length: Math.ceil(pageInfo?.total / pageInfo?.limit) },
     (_, i) => i + 1
@@ -45,9 +10,6 @@ const Feed = ({
   return (
     <div>
       <div className="mt-8 grid md:grid-cols-4 grid-cols-2 gap-6">
-        {/* {isFetching ? (
-          <div>Loading...</div>
-        ) : ( */}
         <>
           {data?.map((post) => (
             <div key={post?.id}>
@@ -72,50 +34,11 @@ const Feed = ({
                   </div>
                   <div className="tracking-wide truncate">{post?.caption}</div>
                   <div className="mt-1 text-blue-400">{post?.tags}</div>
-
-                  {location.pathname === "/post" && (
-                    <div className="mt-4 cursor-pointer text-sm flex items-center justify-center text-center gap-4">
-                      <button
-                        className="w-1/2 py-1 capitalize rounded bg-red-700 hover:bg-red-600"
-                        onClick={() => handleModalDelete(post?.id)}
-                      >
-                        delete
-                      </button>
-                      <button
-                        type="button"
-                        className="w-1/2 py-1 capitalize rounded bg-blue-700 hover:bg-blue-600"
-                        onClick={() => handleModalEdit(post)}
-                      >
-                        edit
-                      </button>
-                    </div>
-                  )}
-
-                  {location.pathname === "/post" && <FloatingButton />}
                 </div>
               </div>
             </div>
           ))}
         </>
-        {/* )} */}
-
-        {/* {modalEdit && (
-          <HandlePost
-            onClose={() => setModalEdit(false)}
-            name="Edit"
-            edit={true}
-            refetch={refetch}
-            post={selectedPost}
-          />
-        )}
-
-        {modalDelete && (
-          <ModalDeletePost
-            onClose={() => setModalDelete(false)}
-            post={selectedPost}
-            refetch={refetch}
-          />
-        )} */}
       </div>
       <nav className="mt-6">
         <ul className="flex justify-center">
