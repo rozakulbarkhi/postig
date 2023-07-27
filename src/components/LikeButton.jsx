@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
+import Toast from "../utils/Toast";
 
 const LikeButton = ({ postId, refetch, token, like }) => {
-  const [likes, setLikes] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    const likesFromStorage = localStorage.getItem("likes");
-    if (likesFromStorage) {
-      setLikes(JSON.parse(likesFromStorage));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Update Local Storage when 'likes' state changes
-    localStorage.setItem("likes", JSON.stringify(likes));
-  }, [likes]);
+    setIsLiked(like > 0);
+  }, [like]);
 
   const handleLikes = async (id) => {
     try {
-      const endpoint = likes.includes(id) ? "unlike" : "like";
+      const newIsLiked = !isLiked;
+      setIsLiked(newIsLiked);
 
       await axios(
-        `${import.meta.env.VITE_APP_BASE_URL}/post/${endpoint}/${id}`,
+        `${import.meta.env.VITE_APP_BASE_URL}/post/${
+          newIsLiked ? "like" : "unlike"
+        }/${id}`,
         {
           method: "PUT",
           headers: {
@@ -31,25 +27,17 @@ const LikeButton = ({ postId, refetch, token, like }) => {
         }
       );
 
-      if (endpoint === "like") {
-        setLikes([...likes, id]);
-      } else {
-        setLikes(likes.filter((item) => item !== id));
+      if (refetch) {
+        refetch();
       }
-
-      refetch();
     } catch (error) {
-      console.log(error);
+      Toast("error", error.response.data.message);
     }
-  };
-
-  const isPostLikedByCurrentUser = (postId) => {
-    return likes.includes(postId);
   };
 
   return (
     <button onClick={() => handleLikes(postId)}>
-      {isPostLikedByCurrentUser(postId) ? (
+      {isLiked ? (
         <FaHeart className="text-red-500" />
       ) : (
         <FaHeart className="text-slate-100" />
